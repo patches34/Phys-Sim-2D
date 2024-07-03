@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 2091567803}
   - component: {fileID: 2091567804}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,6 +343,7 @@ MonoBehaviour:
   rBody2D: {fileID: 2091567800}
   mass: 1
   maxSpeed: 4
+  rotationOffset: -90
 --- !u!114 &2091567804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +357,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicsObject: {fileID: 2091567803}
-  direction: {x: 0, y: 0}
   speed: 1
   changeTime: 5
 --- !u!1660057539 &9223372036854775807

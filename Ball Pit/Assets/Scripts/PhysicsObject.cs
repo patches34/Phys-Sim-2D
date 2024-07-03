@@ -28,6 +28,8 @@ public class PhysicsObject : MonoBehaviour
 
     //  things that might go away
     Vector2 screenSize = Vector2.zero;
+    [SerializeField]
+    float rotationOffset = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -43,8 +45,7 @@ public class PhysicsObject : MonoBehaviour
         // Calculate the velocity for this frame - New
         velocity += acceleration * Time.fixedDeltaTime;
 
-        // Grab current direction from velocity  - New
-        direction = velocity.normalized;
+        UpdateDirection();
 
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
@@ -84,5 +85,15 @@ public class PhysicsObject : MonoBehaviour
         {
             deltaPosition.y = screenSize.y;
         }
+    }
+
+    void UpdateDirection()
+    {
+        // Grab current direction from velocity  - New
+        direction = velocity.normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x);
+
+        transform.rotation = Quaternion.Euler(0f, 0f, (angle * Mathf.Rad2Deg) + rotationOffset);
     }
 }
