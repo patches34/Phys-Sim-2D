@@ -38,9 +38,11 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: '.'
+          path: './docs'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
       - name: Remove artifact
-        uses: c-hive/gha-remove-artifacts@v1
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: github-pages
