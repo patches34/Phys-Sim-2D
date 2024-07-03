@@ -80,6 +80,8 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
+      - name: Remove artifact
+        uses: c-hive/gha-remove-artifacts@v1
 
   # Deployment job
   deploy:
