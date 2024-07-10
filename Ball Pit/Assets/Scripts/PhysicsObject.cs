@@ -33,13 +33,16 @@ public class PhysicsObject : MonoBehaviour
 
     public WorldManager worldManager;
 
+    [SerializeField]
+    SimDataSO simData;
+
     // Start is called before the first frame update
     void Start()
     {
         deltaPosition = Vector2.zero;
     }
 
-    void FixedUpdate()
+    void Update ()
     {
         // Calculate the velocity for this frame - New
         velocity += acceleration * Time.fixedDeltaTime;
@@ -48,14 +51,21 @@ public class PhysicsObject : MonoBehaviour
 
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
-        deltaPosition = transform.position + (velocity * Time.fixedDeltaTime);
-
-        worldManager.CheckForScreenEdge(ref deltaPosition);      
-
-        rBody2D.MovePosition(deltaPosition);
+        deltaPosition += (velocity * Time.deltaTime);        
 
         // Zero out acceleration - New
         acceleration = Vector3.zero;
+    }
+
+    void FixedUpdate()
+    {
+        deltaPosition += transform.position;
+
+        CheckForScreenEdge();
+
+        rBody2D.MovePosition(deltaPosition);
+
+        deltaPosition = Vector3.zero;
     }
 
     //  Force Methods
@@ -68,9 +78,31 @@ public class PhysicsObject : MonoBehaviour
     {
         // Grab current direction from velocity  - New
         direction = velocity.normalized;
+        transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
 
-        float angle = Mathf.Atan2(direction.y, direction.x);
+        //float angle = Mathf.Atan2(direction.y, direction.x);
 
-        transform.rotation = Quaternion.Euler(0f, 0f, (angle * Mathf.Rad2Deg) + rotationOffset);
+        //transform.rotation = Quaternion.Euler(0f, 0f, (angle * Mathf.Rad2Deg) + rotationOffset);
+    }
+
+    public void CheckForScreenEdge()
+    {
+        if (deltaPosition.x > simData.screenSizeX)
+        {
+            deltaPosition.x = -simData.screenSizeX;
+        }
+        else if (deltaPosition.x < -simData.screenSizeX)
+        {
+            deltaPosition.x = simData.screenSizeX;
+        }
+
+        if (deltaPosition.y > simData.screenSizeY)
+        {
+            deltaPosition.y = -simData.screenSizeY;
+        }
+        else if (deltaPosition.y < -simData.screenSizeY)
+        {
+            deltaPosition.y = simData.screenSizeY;
+        }
     }
 }

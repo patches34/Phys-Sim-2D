@@ -154,6 +154,7 @@ MonoBehaviour:
   ballPrefab: {fileID: 2283436792175513144, guid: c4da62cbc923c334e8830536a22a2b02, type: 3}
   spawnCount: 10
   spawnPool: {fileID: 2082317172}
+  simData: {fileID: 11400000, guid: 97587b3c3f4bbae4fb8565b103056e33, type: 2}
 --- !u!4 &34613052
 Transform:
   m_ObjectHideFlags: 0

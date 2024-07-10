@@ -13,10 +13,17 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     Transform spawnPool;
 
+    [SerializeField]
+    SimDataSO simData;
+
+    private void Awake()
+    {
+
+        SetScreenSize();
+    }
     // Start is called before the first frame update
     void Start()
     {
-        SetScreenSize();
 
         for(int i = 0; i < spawnCount; i++)
         {
@@ -35,8 +42,8 @@ public class WorldManager : MonoBehaviour
         if(spawnPool.childCount < 1 || spawnPool.GetChild(0).gameObject.activeInHierarchy)
         {
             Vector3 spawnPos = Vector3.zero;
-            spawnPos.x = Random.Range(-screenSize.x, screenSize.x);
-            spawnPos.y = Random.Range(-screenSize.y, screenSize.y);
+            spawnPos.x = Random.Range(-simData.screenSizeX, simData.screenSizeX);
+            spawnPos.y = Random.Range(-simData.screenSizeY, simData.screenSizeY);
 
             PhysicsObject newBall = Instantiate(ballPrefab, spawnPos, Quaternion.identity, spawnPool);
 
@@ -57,8 +64,8 @@ public class WorldManager : MonoBehaviour
     #region Screen Size Stuff
     void SetScreenSize()
     {
-        screenSize.y = Camera.main.orthographicSize;
-        screenSize.x = screenSize.y * Camera.main.aspect;
+        simData.screenSizeY = Camera.main.orthographicSize;
+        simData.screenSizeX = simData.screenSizeY * Camera.main.aspect;
     }
 
     //  Only works with script on Canvas Object
